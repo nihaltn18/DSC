@@ -7,7 +7,7 @@ struct node
 };
 struct node *root;
 struct node *temp_head;
-int insert_1(int k)
+void insert_1(int k)
 {
     
     if ((temp_head->n>k) && (temp_head->left!=NULL))
@@ -50,12 +50,12 @@ void insert(int k)
     insert_1(k);
     insert_2(k);
 }
-int search(int k)
+void search(int k)
 {
     if(temp_head->n==k)
     {
         printf("%d is in the tree.....\n",k);
-        return 0;
+        return;
     }
     else if (k>temp_head->n && temp_head->right!=NULL)
     {
@@ -70,7 +70,7 @@ int search(int k)
     else
     {
         printf("%d is not in the tree....\n",k);
-        return 0;
+        return;
     }
 }
 void inorder(struct node *temp_head)
@@ -99,16 +99,39 @@ void preorder(struct node *temp_head)
 }
 void delete_(int k)
 {
-
+    if(temp_head->n==k)
+    {
+        printf("%d<--%d-->%d\n",temp_head->left,temp_head,temp_head->right);
+        if(temp_head->right==NULL && temp_head->left==NULL)
+        {
+            printf("successfully deleted %d \n",temp_head->n);
+            temp_head=NULL;
+        }
+    }
+    else if (k>temp_head->n && temp_head->right!=NULL)
+    {
+        temp_head=temp_head->right;
+        delete_(k);
+    }
+    else if (k<temp_head->n && temp_head->left!=NULL)
+    {
+        temp_head=temp_head->left;
+        delete_(k);
+    }
+    else
+    {
+        printf("%d is not in the tree....\n",k);
+        return;
+    }
 }
 int main()
 {
+    int e,a,o;
     root=(struct node*)malloc(sizeof(struct node));
     root->left=NULL;
     root->right=NULL;
     printf("enter the data in the root\n");
     scanf("%d",&root->n);
-    int o;
     while(1)
     {
         printf("to enter the elements into the tree enter 1\n");
@@ -123,7 +146,6 @@ int main()
           while(1)
             {
                 printf("enter the data that you want to insert\n");
-                int a;
                 scanf("%d",&a);
                 if(a==-1)
                 break;
@@ -131,34 +153,32 @@ int main()
                 insert(a);
             }
         }
-        if(o==2)
+        else if(o==2)
         {
             printf("enter the element that you want to search for \n");
-            int e;
             scanf("%d",&e);
             temp_head=root;
             search(e);
         }
-        if(o==3)
+        else if(o==3)
         {
             temp_head=root;
             inorder(temp_head);
         }
-         if(o==4)
+        else if(o==4)
         {
             temp_head=root;
             preorder(temp_head);
         }
-         if(o==5)
+        else if(o==5)
         {
             temp_head=root;
             postorder(temp_head);
         }
-        if(o==6)
+        else if(o==6)
         {
             temp_head=root;
             printf("enter the element that you want to delete\n");
-            int e;
             scanf("%d",&e);
             delete_(e);
         }
