@@ -6,7 +6,7 @@ struct node
     struct node *right,*left;
 };
 struct node *root;
-struct node *temp_head;
+struct node *temp_head, *prev;
 void insert_1(int k)
 {
     
@@ -104,17 +104,43 @@ void delete_(int k)
         printf("%d<--%d-->%d\n",temp_head->left,temp_head,temp_head->right);
         if(temp_head->right==NULL && temp_head->left==NULL)
         {
+            if(prev->right->n==k) 
+            {
+            prev->right=NULL;
+            }
+            if(prev->left->n==k) 
+            {
+            prev->left=NULL;
+            }
             printf("successfully deleted %d \n",temp_head->n);
+            free(temp_head) ;
             temp_head=NULL;
+        }
+        else if(temp_head->right==NULL && temp_head->left!=NULL) 
+        {
+        //node has only left sub-tree
+        
+        }
+        else if(temp_head->right!=NULL && temp_head->left==NULL) 
+        {
+        //node has only right sub-tree
+        
+        }
+        else if(temp_head->right!=NULL && temp_head->left!=NULL) 
+        {
+        //node has two sub-tree
+        
         }
     }
     else if (k>temp_head->n && temp_head->right!=NULL)
     {
+        prev=temp_head;
         temp_head=temp_head->right;
         delete_(k);
     }
     else if (k<temp_head->n && temp_head->left!=NULL)
     {
+        prev=temp_head;
         temp_head=temp_head->left;
         delete_(k);
     }
