@@ -108,6 +108,14 @@ int depth(struct node* temp_head)
     else
         return rightDepth + 1;
 }
+void get_inorder_successor(k,struct node *temp_head)
+{
+    if (temp_head==NULL)
+        return;
+    inorder(temp_head->left);
+    printf("%d\n",temp_head->n);
+    inorder(temp_head->right);
+}
 void delete_(int k,struct node *temp_hea)
 {
     if(temp_hea->n==k)
@@ -161,19 +169,28 @@ void delete_(int k,struct node *temp_hea)
         else if(temp_hea->right!=NULL && temp_hea->left!=NULL)
         {
             //node has two sub-tree
-            
+            if(depth(temp_hea->right) >= depth(temp_hea->left))
+            {
+                //if right sub-tree has more depth than left sub-tree
+                //use inorder successor
+                
+            }
+            if(depth(temp_hea->right) < depth(temp_hea->left))
+            {
+                //if left sub-tree has more depth than right sub-tree
+                //use inorder predecessor
+                
+            }
         }
     }
     else if (k>temp_hea->n && temp_hea->right!=NULL)
     {
         prev=temp_hea;
-        //temp_head=temp_head->right;
         delete_(k, temp_hea->right);
     }
     else if (k<temp_hea->n && temp_hea->left!=NULL)
     {
         prev=temp_hea;
-        //temp_head=temp_head->left;
         delete_(k, temp_hea->left);
     }
     else
