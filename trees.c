@@ -108,13 +108,9 @@ int depth(struct node* temp_head)
     else
         return rightDepth + 1;
 }
-void get_inorder_successor(k,struct node *temp_head)
+void get_inorder_successor(k,struct node *temp_hea) 
 {
-    if (temp_head==NULL)
-        return;
-    inorder(temp_head->left);
-    printf("%d\n",temp_head->n);
-    inorder(temp_head->right);
+
 }
 void delete_(int k,struct node *temp_hea)
 {
