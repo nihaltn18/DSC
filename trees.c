@@ -108,10 +108,6 @@ int depth(struct node* temp_head)
     else
         return rightDepth + 1;
 }
-void get_inorder_successor(k,struct node *temp_hea) 
-{
-
-}
 void delete_(int k,struct node *temp_hea)
 {
     if(temp_hea->n==k)
@@ -119,6 +115,7 @@ void delete_(int k,struct node *temp_hea)
         printf("%d<--%d-->%d\n",temp_hea->left,temp_hea,temp_hea->right);
         if(temp_hea->right==NULL && temp_hea->left==NULL)
         {
+            //node is leaf
             if(prev->right->n==k)
             {
                 prev->right=NULL;
@@ -129,11 +126,11 @@ void delete_(int k,struct node *temp_hea)
             }
             printf("successfully deleted %d \n",temp_hea->n);
             free(temp_hea);
-            //temp_head=NULL;
             return;
         }
         else if(temp_hea->right==NULL && temp_hea->left!=NULL)
         {
+            //node has only one child (only left child) 
             if(prev->right->n==k)
             {
                 prev->right=temp_hea->left;
@@ -149,6 +146,7 @@ void delete_(int k,struct node *temp_hea)
         }
         else if(temp_hea->right!=NULL && temp_hea->left==NULL)
         {
+            //node has only one child (only right child) 
             if(prev->right->n==k)
             {
                 prev->right=temp_hea->right;
@@ -164,21 +162,11 @@ void delete_(int k,struct node *temp_hea)
         }
         else if(temp_hea->right!=NULL && temp_hea->left!=NULL)
         {
-            //node has two sub-tree
-            if(depth(temp_hea->right) >= depth(temp_hea->left))
-            {
-                //if right sub-tree has more depth than left sub-tree
-                //use inorder successor
-                
-            }
-            if(depth(temp_hea->right) < depth(temp_hea->left))
-            {
-                //if left sub-tree has more depth than right sub-tree
-                //use inorder predecessor
-                
-            }
+            //if node has two children
+            
         }
     }
+
     else if (k>temp_hea->n && temp_hea->right!=NULL)
     {
         prev=temp_hea;
