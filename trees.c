@@ -9,7 +9,7 @@ struct node *root;
 struct node *temp_head, *prev;
 void insert_1(int k)
 {
-    
+
     if ((temp_head->n>k) && (temp_head->left!=NULL))
     {
         temp_head=temp_head->left;
@@ -76,7 +76,7 @@ void search(int k)
 void inorder(struct node *temp_head)
 {
     if (temp_head==NULL)
-    return;
+        return;
     inorder(temp_head->left);
     printf("%d\n",temp_head->n);
     inorder(temp_head->right);
@@ -84,7 +84,7 @@ void inorder(struct node *temp_head)
 void postorder(struct node *temp_head)
 {
     if (temp_head==NULL)
-    return;
+        return;
     postorder(temp_head->left);
     postorder(temp_head->right);
     printf("%d\n",temp_head->n);
@@ -92,10 +92,21 @@ void postorder(struct node *temp_head)
 void preorder(struct node *temp_head)
 {
     if (temp_head==NULL)
-    return;
+        return;
     printf("%d\n",temp_head->n);
     preorder(temp_head->left);
     preorder(temp_head->right);
+}
+int depth(struct node* temp_head)
+{
+    if (temp_head == NULL)
+        return -1;
+    int leftDepth = depth(temp_head->left);
+    int rightDepth = depth(temp_head->right);
+    if (leftDepth > rightDepth)
+        return leftDepth + 1;
+    else
+        return rightDepth + 1;
 }
 void delete_(int k)
 {
@@ -104,32 +115,53 @@ void delete_(int k)
         printf("%d<--%d-->%d\n",temp_head->left,temp_head,temp_head->right);
         if(temp_head->right==NULL && temp_head->left==NULL)
         {
-            if(prev->right->n==k) 
+            if(prev->right->n==k)
             {
-            prev->right=NULL;
+                prev->right=NULL;
             }
-            if(prev->left->n==k) 
+            if(prev->left->n==k)
             {
-            prev->left=NULL;
+                prev->left=NULL;
             }
             printf("successfully deleted %d \n",temp_head->n);
             free(temp_head) ;
             temp_head=NULL;
+            return;
         }
-        else if(temp_head->right==NULL && temp_head->left!=NULL) 
+        else if(temp_head->right==NULL && temp_head->left!=NULL)
         {
-        //node has only left sub-tree
-        
+            if(prev->right->n==k)
+            {
+                prev->right=temp_head->left;
+                free(temp_head) ;
+            }
+            else if(prev->left->n==k)
+            {
+                prev->left=temp_head->left;
+                free(temp_head);
+            }
+            printf("successfully deleted %d \n",temp_head->n);
+            return;
         }
-        else if(temp_head->right!=NULL && temp_head->left==NULL) 
+        else if(temp_head->right!=NULL && temp_head->left==NULL)
         {
-        //node has only right sub-tree
-        
+            if(prev->right->n==k)
+            {
+                prev->right=temp_head->right;
+                free(temp_head) ;
+            }
+            else if(prev->left->n==k)
+            {
+                prev->left=temp_head->right;
+                free(temp_head);
+            }
+            printf("successfully deleted %d \n",temp_head->n);
+            return;
         }
-        else if(temp_head->right!=NULL && temp_head->left!=NULL) 
+        else if(temp_head->right!=NULL && temp_head->left!=NULL)
         {
-        //node has two sub-tree
-        
+            //node has two sub-tree
+            
         }
     }
     else if (k>temp_head->n && temp_head->right!=NULL)
@@ -152,7 +184,7 @@ void delete_(int k)
 }
 int main()
 {
-    int e,a,o;
+    int e,a,o,d;
     root=(struct node*)malloc(sizeof(struct node));
     root->left=NULL;
     root->right=NULL;
@@ -166,17 +198,18 @@ int main()
         printf("to display the elements in the tree in preorder format enter 4\n");
         printf("to display the elements in the tree in postorder format enter 5\n");
         printf("to delete the elements in the tree enter 6\n");
+        printf("to the depth of the tree enter 7\n") ;
         scanf("%d",&o);
         if(o==1)
         {
-          while(1)
+            while(1)
             {
                 printf("enter the data that you want to insert\n");
                 scanf("%d",&a);
                 if(a==-1)
-                break;
+                    break;
                 else
-                insert(a);
+                    insert(a);
             }
         }
         else if(o==2)
@@ -208,10 +241,16 @@ int main()
             scanf("%d",&e);
             delete_(e);
         }
+        if(o==7)
+        {
+            temp_head=root;
+            d=depth(temp_head);
+            printf("depth of the tree is %d\n",d);
+        }
 
         else
         {
             printf("invalid input........\nenter a valid input\n");
         }
-    } 
+    }
 }
