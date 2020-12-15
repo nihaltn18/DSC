@@ -54,7 +54,7 @@ void search(int k)
 {
     if(temp_head->n==k)
     {
-        printf("%d is in the tree.....\n",k);
+        printf("%d is in the tree.....\n%d<--%d-->%d\n",k,temp_head->left,temp_head->n,temp_head->right);
         return;
     }
     else if (k>temp_head->n && temp_head->right!=NULL)
@@ -108,73 +108,73 @@ int depth(struct node* temp_head)
     else
         return rightDepth + 1;
 }
-void delete_(int k)
+void delete_(int k,struct node *temp_hea)
 {
-    if(temp_head->n==k)
+    if(temp_hea->n==k)
     {
-        printf("%d<--%d-->%d\n",temp_head->left,temp_head,temp_head->right);
-        if(temp_head->right==NULL && temp_head->left==NULL)
+        printf("%d<--%d-->%d\n",temp_hea->left,temp_hea,temp_hea->right);
+        if(temp_hea->right==NULL && temp_hea->left==NULL)
         {
             if(prev->right->n==k)
             {
                 prev->right=NULL;
             }
-            if(prev->left->n==k)
+            else if(prev->left->n==k)
             {
                 prev->left=NULL;
             }
-            printf("successfully deleted %d \n",temp_head->n);
-            free(temp_head) ;
-            temp_head=NULL;
+            printf("successfully deleted %d \n",temp_hea->n);
+            free(temp_hea);
+            //temp_head=NULL;
             return;
         }
-        else if(temp_head->right==NULL && temp_head->left!=NULL)
+        else if(temp_hea->right==NULL && temp_hea->left!=NULL)
         {
             if(prev->right->n==k)
             {
-                prev->right=temp_head->left;
-                free(temp_head) ;
+                prev->right=temp_hea->left;
+                free(temp_hea) ;
             }
             else if(prev->left->n==k)
             {
-                prev->left=temp_head->left;
-                free(temp_head);
+                prev->left=temp_hea->left;
+                free(temp_hea);
             }
-            printf("successfully deleted %d \n",temp_head->n);
+            printf("successfully deleted %d \n",temp_hea->n);
             return;
         }
-        else if(temp_head->right!=NULL && temp_head->left==NULL)
+        else if(temp_hea->right!=NULL && temp_hea->left==NULL)
         {
             if(prev->right->n==k)
             {
-                prev->right=temp_head->right;
-                free(temp_head) ;
+                prev->right=temp_hea->right;
+                free(temp_hea) ;
             }
             else if(prev->left->n==k)
             {
-                prev->left=temp_head->right;
+                prev->left=temp_hea->right;
                 free(temp_head);
             }
-            printf("successfully deleted %d \n",temp_head->n);
+            printf("successfully deleted %d \n",temp_hea->n);
             return;
         }
-        else if(temp_head->right!=NULL && temp_head->left!=NULL)
+        else if(temp_hea->right!=NULL && temp_hea->left!=NULL)
         {
             //node has two sub-tree
             
         }
     }
-    else if (k>temp_head->n && temp_head->right!=NULL)
+    else if (k>temp_hea->n && temp_hea->right!=NULL)
     {
-        prev=temp_head;
-        temp_head=temp_head->right;
-        delete_(k);
+        prev=temp_hea;
+        //temp_head=temp_head->right;
+        delete_(k, temp_hea->right);
     }
-    else if (k<temp_head->n && temp_head->left!=NULL)
+    else if (k<temp_hea->n && temp_hea->left!=NULL)
     {
-        prev=temp_head;
-        temp_head=temp_head->left;
-        delete_(k);
+        prev=temp_hea;
+        //temp_head=temp_head->left;
+        delete_(k, temp_hea->left);
     }
     else
     {
@@ -239,7 +239,7 @@ int main()
             temp_head=root;
             printf("enter the element that you want to delete\n");
             scanf("%d",&e);
-            delete_(e);
+            delete_(e, temp_head);
         }
         if(o==7)
         {
