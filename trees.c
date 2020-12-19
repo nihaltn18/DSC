@@ -229,8 +229,7 @@ int main()
                     root=insert(root,i);
                     balance(root) ;
                 }
-            inorder(root) ;
-            }
+           }
         }
         else if(choice==2)
         {
