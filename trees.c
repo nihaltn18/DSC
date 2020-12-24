@@ -41,9 +41,6 @@ void preorder(struct node* root)
         preorder(root->right);
     }
 }
-void balance(struct node* nd, int key);
-bool nodeisbalanced(struct node *root);
-struct node* delete(struct node* root, int key);
 struct node* insert(struct node* node, int key)
 {
     if (node == NULL)
