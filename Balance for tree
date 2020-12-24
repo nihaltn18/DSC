@@ -1,0 +1,21 @@
+void balance(struct node* nd, int key)
+{
+    if (nd == NULL)
+        return;
+    if (key < nd->key)
+        balance(nd->left, key);
+    else if (key > nd->key)
+        balance(nd->right, key);
+
+    if(!nodeisbalanced(nd))
+    {
+        int k = nd->key;
+        root = delete(root, nd->key);
+        printf("%d is deleted\n",k);
+        if(!nodeisbalanced(nd)) 
+        balance(root, k) ;
+        root = insert(root, k) ;
+        printf("%d is inserted\n",k); 
+        balance(root, k) ;
+    }
+}
