@@ -220,7 +220,7 @@ int main()
         }
         else if(choice==1 && o==2)
         {
-            while(i)
+            while(1)
             {
                 printf("enter the value that you want to insert\n") ;
                 scanf("%d",&i);
