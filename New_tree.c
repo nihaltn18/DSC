@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include<time.h>
 #include<stdbool.h>
 struct Node
 {
@@ -60,14 +60,14 @@ int getBalance(struct Node *N)
         return 0;
     return height(N->left) - height(N->right);
 }
-struct node* minnode(struct Node* node)
+struct Node* minnode(struct Node* node)
 {
     struct Node* current = node;
     while (current && current->left != NULL)
         current = current->left;
     return current;
 }
-struct node* maxnode(struct Node* node)
+struct Node* maxnode(struct Node* node)
 {
     struct Node* current = node;
     while (current && current->right != NULL)
@@ -113,22 +113,12 @@ struct Node* delete(struct Node* root, int key)
                            height(root->right));
     return root;
 }
-struct Node *insert2(struct Node *node, int key)
-{
-    if (node == NULL)
-        return (newNode(key));
-
-    if (key < node->key)
-        node->left = insert2(node->left, key);
-    else if (key > node->key)
-        node->right = insert2(node->right, key);
-    return node;
-}
 struct Node *insert(struct Node *node, int key)
 {
+    struct Node *parent;
     if (node == NULL)
     {
-        //printf("%d is inserted\n",key) ;
+        printf("%d is inserted\n",key) ;
         return (newNode(key));
     }
     if (key < node->key)
@@ -140,11 +130,11 @@ struct Node *insert(struct Node *node, int key)
     node->height = 1 + max(height(node->left),
                            height(node->right));
     int balance=getBalance(node) ;
-    if(abs(balance) >1) 
+    if(abs(balance)>1) 
     {
         int k=node->key;
         node=delete(node, k);
-        //printf("%d deleted\n",k) ;
+        printf("%d deleted\n",k) ;
         node=insert(node, k);
     }
     return node;
@@ -162,13 +152,13 @@ int main()
 {
     struct Node *root = NULL;
     clock_t begin=clock() ;
-    for (int i=0; i<10; i++)
+    for (int i=0; i<1000; i++)
     {
         root = insert(root, i) ;
     }
     clock_t end=clock() ;
     inorder(root);
-    printf ("%d\n",(double)(end - begin) / CLOCKS_PER_SEC) ;
+    printf ("%d\n",(double)(end-begin) / CLOCKS_PER_SEC) ;
     if(treeisbalanced(root)) 
     printf("balanced\n") ;
     else
