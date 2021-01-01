@@ -74,6 +74,7 @@ struct Node* maxnode(struct Node* node)
         current = current->right;
     return current;
 }
+struct Node *insert(struct Node *node, int key);
 struct Node* delete(struct Node* root, int key)
 {
     if(root==NULL)
@@ -83,7 +84,7 @@ struct Node* delete(struct Node* root, int key)
     else if(key<root->key)
         root->left=delete(root->left, key) ;
     else
-    {
+    {    
         if (root->left == NULL)
         {
             struct Node* temp = root->right;
@@ -111,6 +112,14 @@ struct Node* delete(struct Node* root, int key)
     }
     root->height = 1 + max(height(root->left),
                            height(root->right));
+    int balance=getBalance(root) ;
+    if(abs(balance)>1)
+    {
+        int k=root->key;
+        //printf("%d deleting\n",k);
+        root=delete(root, k);
+        root=insert(root, k);
+    }
     return root;
 }
 struct Node *insert(struct Node *node, int key)
@@ -118,7 +127,7 @@ struct Node *insert(struct Node *node, int key)
     struct Node *parent;
     if (node == NULL)
     {
-        printf("%d is inserted\n",key) ;
+        printf("%d is inserted\n",key);
         return (newNode(key));
     }
     if (key < node->key)
@@ -130,11 +139,11 @@ struct Node *insert(struct Node *node, int key)
     node->height = 1 + max(height(node->left),
                            height(node->right));
     int balance=getBalance(node) ;
-    if(abs(balance)>1) 
+    if(abs(balance)>1)
     {
         int k=node->key;
+        printf("%d deleting\n",k);
         node=delete(node, k);
-        printf("%d deleted\n",k) ;
         node=insert(node, k);
     }
     return node;
@@ -154,13 +163,13 @@ int main()
     clock_t begin=clock() ;
     for (int i=0; i<1000; i++)
     {
-        root = insert(root, i) ;
+        root=insert(root, i) ;
     }
     clock_t end=clock() ;
     inorder(root);
     printf ("%d\n",(double)(end-begin) / CLOCKS_PER_SEC) ;
-    if(treeisbalanced(root)) 
-    printf("balanced\n") ;
+    if(treeisbalanced(root))
+        printf("balanced\n") ;
     else
-    printf("unbalanced\n") ;
+        printf("unbalanced\n") ;
 }
