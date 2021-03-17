@@ -68,7 +68,7 @@ int main()
         root=insert(root,i);
     }
     inorder(root);
-    printf("number of roots with exactly one child is %d\npalak.....😂😂😂😂😂😂😂\n",count(root));
-    printf("minimum value in the tree is %d palak.....😂😂😂😂😂😂😂 \n",min(root));
-    printf("height of the tree is %d palak.....😂😂😂😂😂😂😂 \n",height(root));
+    printf("number of roots with exactly one child is %d\n\n",count(root));
+    printf("minimum value in the tree is %d \n",min(root));
+    printf("height of the tree is %d \n",height(root));
 }
